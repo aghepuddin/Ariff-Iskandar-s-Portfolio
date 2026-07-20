@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Ariff Iskandar</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .contact-info {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .contact-info h2 {
+            color: #2c3e50;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+
+        .contact-item {
+            margin-bottom: 20px;
+        }
+
+        .contact-item h4 {
+            color: #2c3e50;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .contact-item p,
+        .contact-item a {
+            color: #7f8c8d;
+            text-decoration: none;
+            font-size: 0.95rem;
+        }
+
+        .contact-item a:hover {
+            color: #3498db;
+            text-decoration: underline;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-link {
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #3498db;
+            color: white;
+            border-radius: 50%;
+            text-decoration: none;
+            font-size: 1.3rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background-color: #e74c3c;
+            transform: translateY(-3px);
+        }
+
+        .contact-form {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .contact-form h2 {
+            color: #2c3e50;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+
+        .success-message {
+            display: none;
+            background-color: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border-left: 4px solid #28a745;
+        }
+
+        .error-message {
+            display: none;
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border-left: 4px solid #f5c6cb;
+        }
+
+        @media (max-width: 768px) {
+            .contact-container {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Ribbon Menu -->
+    <div class="ribbon-menu">
+        <nav class="menu-items">
+            <a href="index.html" class="menu-item">Home</a>
+            <a href="education.html" class="menu-item">Education</a>
+            <a href="projects.html" class="menu-item">Projects</a>
+            <a href="contact.html" class="menu-item active">Contact</a>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="page-title">
+            <h1>Get In Touch</h1>
+            <p>Let's connect and discuss opportunities or collaborations</p>
+        </div>
+
+        <!-- Contact Container -->
+        <div class="contact-container">
+            <!-- Contact Information -->
+            <div class="contact-info">
+                <h2>Contact Information</h2>
+
+                <div class="contact-item">
+                    <h4>📧 Email</h4>
+                    <a href="mailto:your.email@example.com">your.email@example.com</a>
+                </div>
+
+                <div class="contact-item">
+                    <h4>📱 Phone</h4>
+                    <p>+1 (XXX) XXX-XXXX</p>
+                </div>
+
+                <div class="contact-item">
+                    <h4>📍 Location</h4>
+                    <p>Your City, Country</p>
+                </div>
+
+                <div class="contact-item">
+                    <h4>💼 LinkedIn</h4>
+                    <a href="https://linkedin.com/in/your-profile" target="_blank">linkedin.com/in/your-profile</a>
+                </div>
+
+                <div class="contact-item">
+                    <h4>🐙 GitHub</h4>
+                    <a href="https://github.com/your-profile" target="_blank">github.com/your-profile</a>
+                </div>
+
+                <h4 style="margin-top: 25px; color: #2c3e50;">Follow Me</h4>
+                <div class="social-links">
+                    <a href="https://twitter.com/your-profile" target="_blank" class="social-link" title="Twitter">𝕏</a>
+                    <a href="https://linkedin.com/in/your-profile" target="_blank" class="social-link" title="LinkedIn">in</a>
+                    <a href="https://github.com/your-profile" target="_blank" class="social-link" title="GitHub">⚙</a>
+                    <a href="https://instagram.com/your-profile" target="_blank" class="social-link" title="Instagram">📷</a>
+                </div>
+
+                <div style="background-color: #ecf0f1; padding: 15px; border-radius: 8px; margin-top: 20px;">
+                    <h4 style="color: #2c3e50; margin-bottom: 10px;">Response Time</h4>
+                    <p style="color: #7f8c8d; font-size: 0.9rem;">I typically respond to inquiries within 24-48 hours. Looking forward to hearing from you!</p>
+                </div>
+            </div>
+
+            <!-- Contact Form -->
+            <div class="contact-form">
+                <h2>Send a Message</h2>
+                
+                <div id="successMessage" class="success-message">
+                    Thank you! Your message has been sent successfully. I'll get back to you soon.
+                </div>
+
+                <div id="errorMessage" class="error-message">
+                    Please fill out all fields correctly before submitting.
+                </div>
+
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Full Name *</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="subject">Subject *</label>
+                        <input type="text" id="subject" name="subject" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Message *</label>
+                        <textarea id="message" name="message" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Phone Number (Optional)</label>
+                        <input type="tel" id="phone" name="phone">
+                    </div>
+
+                    <button type="submit" class="btn">Send Message</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Additional Information -->
+        <div style="max-width: 900px; margin: 50px auto 0; text-align: center;">
+            <div class="card">
+                <h3>Always Open to Opportunities</h3>
+                <p>Whether you have a question, job opportunity, or just want to connect, I'd love to hear from you. Feel free to reach out through any of the contact methods above.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Contact Form Handler
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Reset messages
+            document.getElementById('successMessage').style.display = 'none';
+            document.getElementById('errorMessage').style.display = 'none';
+
+            // Get form data
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                subject: document.getElementById('subject').value,
+                message: document.getElementById('message').value,
+                phone: document.getElementById('phone').value
+            };
+
+            // Validate form
+            if (!formData.name || !formData.email || !formData.subject || !formData.message) {
+                document.getElementById('errorMessage').style.display = 'block';
+                return;
+            }
+
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(formData.email)) {
+                document.getElementById('errorMessage').style.display = 'block';
+                return;
+            }
+
+            // Show success message
+            document.getElementById('successMessage').style.display = 'block';
+
+            // Reset form
+            this.reset();
+
+            // You can send this data to a backend service or email service here
+            console.log('Form submitted:', formData);
+        });
+    </script>
+</body>
+</html>
