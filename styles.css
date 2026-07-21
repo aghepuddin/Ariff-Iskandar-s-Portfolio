@@ -41,6 +41,14 @@ body {
 .ribbon-menu:hover {
     left: 0;
 }
+.ribbon-menu::before {
+    content: "";
+    position: absolute;
+    left: -20px;
+    top: 0;
+    width: 20px;
+    height: 100%;
+}
 
 .menu-items {
     display: flex;
