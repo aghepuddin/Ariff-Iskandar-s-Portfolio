@@ -26,7 +26,7 @@ body {
 /* Ribbon Menu Styles */
 .ribbon-menu {
     position: fixed;
-    left: -80px;
+    left: 0px;
     top: 50%;
     transform: translateY(-50%);
     width: 80px;
@@ -38,17 +38,6 @@ body {
     transition: var(--transition);
 }
 
-.ribbon-menu:hover {
-    left: 0;
-}
-.ribbon-menu::before {
-    content: "";
-    position: absolute;
-    left: -20px;
-    top: 0;
-    width: 20px;
-    height: 100%;
-}
 
 .menu-items {
     display: flex;
