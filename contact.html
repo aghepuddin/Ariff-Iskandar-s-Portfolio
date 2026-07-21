@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact - Ariff Iskandar</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <style>
         .contact-container {
             display: grid;
@@ -91,6 +92,42 @@
             padding-bottom: 10px;
         }
 
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ecf0f1;
+            border-radius: 5px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            transition: border-color 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
         .success-message {
             display: none;
             background-color: #d4edda;
@@ -113,6 +150,17 @@
             animation: slideIn 0.3s ease;
         }
 
+        .loading-message {
+            display: none;
+            background-color: #d1ecf1;
+            color: #0c5460;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border-left: 4px solid #17a2b8;
+            animation: slideIn 0.3s ease;
+        }
+
         @keyframes slideIn {
             from {
                 opacity: 0;
@@ -124,9 +172,49 @@
             }
         }
 
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            border: 2px solid rgba(0, 0, 0, 0.2);
+            border-top-color: #0c5460;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+            margin-right: 8px;
+        }
+
+        .btn {
+            background-color: #3498db;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+        }
+
         .btn:disabled {
             opacity: 0.6;
             cursor: not-allowed;
+            transform: none;
         }
 
         @media (max-width: 768px) {
@@ -209,20 +297,29 @@
                     ❌ Please fill out all fields correctly before submitting.
                 </div>
 
+                <div id="loadingMessage" class="loading-message">
+                    <span class="spinner"></span>Sending your message...
+                </div>
+
                 <form id="contactForm">
                     <div class="form-group">
                         <label for="name">Full Name *</label>
-                        <input type="text" id="name" name="user_name" required>
+                        <input type="text" id="name" name="user_name" placeholder="John Doe" required>
                     </div>
 
                     <div class="form-group">
                         <label for="email">Email Address *</label>
-                        <input type="email" id="email" name="user_email" required>
+                        <input type="email" id="email" name="user_email" placeholder="john@example.com" required>
                     </div>
 
                     <div class="form-group">
                         <label for="subject">Subject *</label>
-                        <input type="text" id="subject" name="subject" required>
+                        <input type="text" id="subject" name="subject" placeholder="What is this about?" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Message *</label>
+                        <textarea id="message" name="message" placeholder="Tell me more about your inquiry..." required></textarea>
                     </div>
 
                     <button type="submit" class="btn" id="submitBtn">Send Message</button>
@@ -243,6 +340,9 @@
     <script src="script.js"></script>
 
     <script>
+        // Initialize EmailJS
+        emailjs.init("2i8wVvkFuRXB5lBVJ");
+
         // Contact Form Handler
         document.getElementById('contactForm').addEventListener('submit', function(e) {
             e.preventDefault();
@@ -250,14 +350,16 @@
             // Reset all messages
             document.getElementById('successMessage').style.display = 'none';
             document.getElementById('errorMessage').style.display = 'none';
+            document.getElementById('loadingMessage').style.display = 'none';
 
             // Get form data
             const user_name = document.getElementById('name').value.trim();
             const user_email = document.getElementById('email').value.trim();
             const subject = document.getElementById('subject').value.trim();
+            const message = document.getElementById('message').value.trim();
 
             // Validate required fields
-            if (!user_name || !user_email || !subject) {
+            if (!user_name || !user_email || !subject || !message) {
                 document.getElementById('errorMessage').textContent = '❌ Please fill out all required fields.';
                 document.getElementById('errorMessage').style.display = 'block';
                 return;
@@ -271,14 +373,57 @@
                 return;
             }
 
-            // Show success message
-            document.getElementById('successMessage').style.display = 'block';
-            document.getElementById('contactForm').reset();
+            // Show loading message
+            document.getElementById('loadingMessage').style.display = 'block';
+            document.getElementById('submitBtn').disabled = true;
 
-            // Auto-hide success message after 5 seconds
-            setTimeout(() => {
-                document.getElementById('successMessage').style.display = 'none';
-            }, 5000);
+            // Prepare EmailJS parameters
+            const templateParams = {
+                user_name: user_name,
+                user_email: user_email,
+                subject: subject,
+                message: message
+            };
+
+            // Send email using EmailJS
+            emailjs.send(
+                "service_tocax0e",
+                "template_tkfffuc",
+                templateParams
+            )
+            .then(function(response) {
+                console.log('Success:', response);
+                
+                // Hide loading message
+                document.getElementById('loadingMessage').style.display = 'none';
+                
+                // Show success message
+                document.getElementById('successMessage').style.display = 'block';
+                
+                // Reset form
+                document.getElementById('contactForm').reset();
+                
+                // Re-enable submit button
+                document.getElementById('submitBtn').disabled = false;
+
+                // Auto-hide success message after 5 seconds
+                setTimeout(() => {
+                    document.getElementById('successMessage').style.display = 'none';
+                }, 5000);
+            })
+            .catch(function(error) {
+                console.error('Error:', error);
+                
+                // Hide loading message
+                document.getElementById('loadingMessage').style.display = 'none';
+                
+                // Show error message
+                document.getElementById('errorMessage').textContent = '❌ Failed to send message. Please try again later.';
+                document.getElementById('errorMessage').style.display = 'block';
+                
+                // Re-enable submit button
+                document.getElementById('submitBtn').disabled = false;
+            });
         });
     </script>
 </body>
