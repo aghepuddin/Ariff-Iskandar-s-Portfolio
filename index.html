@@ -16,7 +16,22 @@
             <a href="contact.html" class="menu-item">Contact</a>
         </nav>
     </div>
+<script>
+    let lastScroll = 0;
+const navbar = document.querySelector(".ribbon-menu");
 
+window.addEventListener("scroll", () => {
+    let scrollTop = window.scrollY;
+
+    if (scrollTop > lastScroll && scrollTop > 80) {
+        navbar.style.transform = "translateY(-100%)";
+    } else {
+        navbar.style.transform = "translateY(0)";
+    }
+
+    lastScroll = scrollTop;
+});
+</script>
     <!-- Main Content -->
     <div class="container">
         <div class="parent">
