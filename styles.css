@@ -26,24 +26,26 @@ body {
 /* Ribbon Menu Styles */
 .ribbon-menu {
     position: fixed;
-    left: 0px;
-    top: 150%;
-
-    width: 80px;
+    left: 20px;
+    top: 50%;
+    transform: translateX(-50%);
+    width: auto;
+    min width: 500px;
     background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-    border-radius: 0 10px 10px 0;
-    padding: 20px 0;
+    border-radius: 15px ;
+    padding: 10px 20px;
     z-index: 1000;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
     transition: var(--transition);
 }
 
 
 .menu-items {
     display: flex;
-    flex-direction: column;
-    gap: 0;
-    height: 100%;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
 }
 
 .menu-item {
