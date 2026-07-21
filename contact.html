@@ -224,6 +224,7 @@
                     ⏳ Sending your message...
                 </div>
 
+                <!-- Note: The form will be submitted to Formspree via JavaScript. Replace FORMSPREE_ENDPOINT with your actual Formspree URL -->
                 <form id="contactForm">
                     <div class="form-group">
                         <label for="name">Full Name *</label>
@@ -253,22 +254,19 @@
             </div>
         </div>
     </div>
-   <!-- EmailJS Library -->
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/index.min.js"></script>
+   <!-- Keep external script.js if it contains other site scripts -->
     <script src="script.js"></script>
- 
-    
-    <script>
-        // Initialize EmailJS with your public key
-        (function(){
-            emailjs.init({ publicKey: "2i8wVvkFuRXB5lBVJ"});
-            console.log("✅ EmailJS initialized successfully");
-        })();
 
-        // Contact Form Handler
+    <script>
+        // --- Formspree Integration ---
+        // Replace the string below with your Formspree form endpoint, e.g.:
+        // const FORMSPREE_ENDPOINT = "https://formspree.io/f/mnqlxyz";
+        const FORMSPREE_ENDPOINT = "https://formspree.io/f/xnjevebo"; // Formspree endpoint provided by user
+
+        // Contact Form Handler (uses fetch to submit JSON to Formspree)
         document.getElementById('contactForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            console.log("📝 Form submission started");
+            console.log("📝 Form submission started (Formspree)");
 
             // Reset all messages
             document.getElementById('successMessage').style.display = 'none';
@@ -308,61 +306,53 @@
             document.getElementById('submitBtn').disabled = true;
             console.log("🔄 Showing loading state and disabling button");
 
-            // Send email using EmailJS
-            console.log("🚀 Sending email via EmailJS...");
-            console.log("Service ID: service_h9r9zoq");
-            console.log("Template ID: template_s8yd71h");
-            
-            emailjs.send("service_tocax0e", "template_s8yd71h", formData)
-            .then(function(response) {
-                console.log('✅ EMAIL SENT SUCCESSFULLY!', response.status, response.text);
-                
-                // Hide loading, show success
-                document.getElementById('loadingMessage').style.display = 'none';
-                document.getElementById('successMessage').style.display = 'block';
-                
-                // Reset form
-                document.getElementById('contactForm').reset();
-                
-                // Re-enable button
-                document.getElementById('submitBtn').disabled = false;
+            // Send to Formspree
+            console.log("🚀 Sending form to Formspree endpoint:", FORMSPREE_ENDPOINT);
 
-                // Auto-hide success message after 5 seconds
-                setTimeout(() => {
-                    document.getElementById('successMessage').style.display = 'none';
-                }, 5000);
+            fetch(FORMSPREE_ENDPOINT, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
             })
-            .catch(function(error) {
-                console.error('❌ EMAIL FAILED!', error);
-                
-                // Detailed error logging
-                console.error('Full error object:', error);
-                if (error.text) {
-                    console.error('Error text:', error.text);
-                }
-                if (error.status) {
-                    console.error('Error status:', error.status);
-                }
-                
-                // Hide loading, show error
+            .then(async (response) => {
                 document.getElementById('loadingMessage').style.display = 'none';
-                
-                let errorMsg = '❌ Failed to send message. ';
-                if (error.text === 'Invalid service ID') {
-                    errorMsg += 'Invalid EmailJS Service ID.';
-                } else if (error.text === 'Invalid template ID') {
-                    errorMsg += 'Invalid EmailJS Template ID.';
-                } else if (error.text === 'Invalid access token') {
-                    errorMsg += 'Invalid EmailJS Public Key.';
+
+                if (response.ok) {
+                    console.log('✅ FORM SUBMITTED SUCCESSFULLY', response.status);
+                    document.getElementById('successMessage').style.display = 'block';
+                    document.getElementById('contactForm').reset();
+
+                    // Re-enable button
+                    document.getElementById('submitBtn').disabled = false;
+
+                    // Auto-hide success message after 5 seconds
+                    setTimeout(() => {
+                        document.getElementById('successMessage').style.display = 'none';
+                    }, 5000);
                 } else {
-                    errorMsg += 'Try again or email directly: amiralariff97@gmail.com';
+                    const data = await response.json().catch(() => ({}));
+                    console.error('❌ FORM SUBMISSION FAILED', response.status, data);
+
+                    let errorMsg = '❌ Failed to send message. Please try again or email directly: amiralariff97@gmail.com';
+                    if (data && data.error) {
+                        errorMsg += ' — ' + data.error;
+                    }
+
+                    document.getElementById('errorMessage').textContent = errorMsg + ' Check browser console (F12) for details.';
+                    document.getElementById('errorMessage').style.display = 'block';
+
+                    // Re-enable button
+                    document.getElementById('submitBtn').disabled = false;
                 }
-                errorMsg += ' Check browser console (F12) for details.';
-                
-                document.getElementById('errorMessage').textContent = errorMsg;
+            })
+            .catch((error) => {
+                console.error('❌ NETWORK OR CORS ERROR', error);
+                document.getElementById('loadingMessage').style.display = 'none';
+                document.getElementById('errorMessage').textContent = '❌ Failed to send message due to a network error. Try again or email directly: amiralariff97@gmail.com';
                 document.getElementById('errorMessage').style.display = 'block';
-                
-                // Re-enable button
                 document.getElementById('submitBtn').disabled = false;
             });
         });
