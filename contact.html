@@ -224,16 +224,15 @@
                     ⏳ Sending your message...
                 </div>
 
-                <!-- Note: The form will be submitted to Formspree via JavaScript. Replace FORMSPREE_ENDPOINT with your actual Formspree URL -->
                 <form id="contactForm">
                     <div class="form-group">
                         <label for="name">Full Name *</label>
-                        <input type="text" id="name" name="name" required>
+                        <input type="text" id="name" name="user_name" required>
                     </div>
 
                     <div class="form-group">
                         <label for="email">Email Address *</label>
-                        <input type="email" id="email" name="email" required>
+                        <input type="email" id="email" name="user_email" required>
                     </div>
 
                     <div class="form-group">
@@ -254,19 +253,22 @@
             </div>
         </div>
     </div>
-   <!-- Keep external script.js if it contains other site scripts -->
+
+    <!-- EmailJS Library -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/index.min.js"></script>
+    
+    <!-- Keep external script.js if it contains other site scripts -->
     <script src="script.js"></script>
 
     <script>
-        // --- Formspree Integration ---
-        // Replace the string below with your Formspree form endpoint, e.g.:
-        // const FORMSPREE_ENDPOINT = "https://formspree.io/f/mnqlxyz";
-        const FORMSPREE_ENDPOINT = "https://formspree.io/f/xnjevebo"; // Formspree endpoint provided by user
+        // --- EmailJS Integration ---
+        // Initialize EmailJS with your Public Key
+        emailjs.init("0nQ-DXTFBnXWPvfVD"); // Your Public Key
 
-        // Contact Form Handler (uses fetch to submit JSON to Formspree)
+        // Contact Form Handler (uses EmailJS)
         document.getElementById('contactForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            console.log("📝 Form submission started (Formspree)");
+            console.log("📝 Form submission started (EmailJS)");
 
             // Reset all messages
             document.getElementById('successMessage').style.display = 'none';
@@ -274,16 +276,14 @@
             document.getElementById('loadingMessage').style.display = 'none';
 
             // Get form data
-            const formData = {
-                name: document.getElementById('name').value.trim(),
-                email: document.getElementById('email').value.trim(),
-                subject: document.getElementById('subject').value.trim()
-            };
+            const user_name = document.getElementById('name').value.trim();
+            const user_email = document.getElementById('email').value.trim();
+            const subject = document.getElementById('subject').value.trim();
 
-            console.log("📦 Form data collected:", formData);
+            console.log("📦 Form data collected");
 
             // Validate required fields
-            if (!formData.name || !formData.email || !formData.subject) {
+            if (!user_name || !user_email || !subject) {
                 console.warn("⚠️ Validation failed: Missing required fields");
                 document.getElementById('errorMessage').textContent = '❌ Please fill out all required fields.';
                 document.getElementById('errorMessage').style.display = 'block';
@@ -292,7 +292,7 @@
 
             // Email validation
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(formData.email)) {
+            if (!emailRegex.test(user_email)) {
                 console.warn("⚠️ Validation failed: Invalid email format");
                 document.getElementById('errorMessage').textContent = '❌ Please enter a valid email address.';
                 document.getElementById('errorMessage').style.display = 'block';
@@ -306,52 +306,38 @@
             document.getElementById('submitBtn').disabled = true;
             console.log("🔄 Showing loading state and disabling button");
 
-            // Send to Formspree
-            console.log("🚀 Sending form to Formspree endpoint:", FORMSPREE_ENDPOINT);
+            // Send email using EmailJS
+            console.log("🚀 Sending email via EmailJS");
 
-            fetch(FORMSPREE_ENDPOINT, {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
-            })
-            .then(async (response) => {
-                document.getElementById('loadingMessage').style.display = 'none';
-
-                if (response.ok) {
-                    console.log('✅ FORM SUBMITTED SUCCESSFULLY', response.status);
-                    document.getElementById('successMessage').style.display = 'block';
-                    document.getElementById('contactForm').reset();
-
-                    // Re-enable button
-                    document.getElementById('submitBtn').disabled = false;
-
-                    // Auto-hide success message after 5 seconds
-                    setTimeout(() => {
-                        document.getElementById('successMessage').style.display = 'none';
-                    }, 5000);
-                } else {
-                    const data = await response.json().catch(() => ({}));
-                    console.error('❌ FORM SUBMISSION FAILED', response.status, data);
-
-                    let errorMsg = '❌ Failed to send message. Please try again or email directly: amiralariff97@gmail.com';
-                    if (data && data.error) {
-                        errorMsg += ' — ' + data.error;
-                    }
-
-                    document.getElementById('errorMessage').textContent = errorMsg + ' Check browser console (F12) for details.';
-                    document.getElementById('errorMessage').style.display = 'block';
-
-                    // Re-enable button
-                    document.getElementById('submitBtn').disabled = false;
+            emailjs.send(
+                "service_tocax0e",      // Your Service ID
+                "template_s8yed71h",    // Your Template ID
+                {
+                    user_name: user_name,
+                    user_email: user_email,
+                    subject: subject
                 }
+            )
+            .then((response) => {
+                document.getElementById('loadingMessage').style.display = 'none';
+                console.log('✅ EMAIL SENT SUCCESSFULLY', response);
+                
+                document.getElementById('successMessage').style.display = 'block';
+                document.getElementById('contactForm').reset();
+                document.getElementById('submitBtn').disabled = false;
+
+                // Auto-hide success message after 5 seconds
+                setTimeout(() => {
+                    document.getElementById('successMessage').style.display = 'none';
+                }, 5000);
             })
             .catch((error) => {
-                console.error('❌ NETWORK OR CORS ERROR', error);
+                console.error('❌ EMAIL SEND FAILED', error);
                 document.getElementById('loadingMessage').style.display = 'none';
-                document.getElementById('errorMessage').textContent = '❌ Failed to send message due to a network error. Try again or email directly: amiralariff97@gmail.com';
+                
+                let errorMsg = '❌ Failed to send message. Please try again or email directly: amiralariff97@gmail.com';
+                
+                document.getElementById('errorMessage').textContent = errorMsg + ' (Check browser console F12 for details)';
                 document.getElementById('errorMessage').style.display = 'block';
                 document.getElementById('submitBtn').disabled = false;
             });
