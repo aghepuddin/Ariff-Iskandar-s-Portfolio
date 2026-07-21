@@ -27,8 +27,8 @@ body {
 .ribbon-menu {
     position: fixed;
     left: 0px;
-    top: 50%;
-    transform: translateY(-50%);
+    top: 150%;
+
     width: 80px;
     background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
     border-radius: 0 10px 10px 0;
