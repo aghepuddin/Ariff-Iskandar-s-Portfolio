@@ -121,7 +121,239 @@ body {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     transition: var(--transition);
 }
+/* ==================================
+ HERO TRANSFORMATION EFFECT
+================================== */
 
+
+.hero {
+
+position:relative;
+
+overflow:hidden;
+
+}
+
+
+
+.hero-main {
+
+
+position:absolute;
+
+transition:.5s ease;
+
+
+}
+
+
+
+.hero-main h1 {
+
+font-size:3.5rem;
+
+}
+
+
+
+.hero-info {
+
+
+position:absolute;
+
+
+width:85%;
+
+max-width:900px;
+
+
+padding:35px;
+
+
+background:
+
+rgba(255,255,255,.15);
+
+
+backdrop-filter:blur(15px);
+
+
+
+border-radius:20px;
+
+
+
+opacity:0;
+
+
+visibility:hidden;
+
+
+
+transform:
+
+scale(.7)
+translateY(80px);
+
+
+
+transition:
+
+.6s cubic-bezier(.68,-0.55,.27,1.55);
+
+
+
+}
+
+
+
+
+
+.hero-info h2 {
+
+
+margin-bottom:20px;
+
+color:white;
+
+}
+
+
+
+.hero-info p {
+
+
+color:white;
+
+line-height:1.8;
+
+text-align:justify;
+
+margin-bottom:15px;
+
+
+}
+
+
+
+
+
+/* Hide original hero */
+
+.hero.active .hero-main {
+
+
+opacity:0;
+
+
+transform:
+
+translateY(-50px)
+scale(.8);
+
+
+}
+
+
+
+
+
+/* Show full information */
+
+
+.hero.active .hero-info {
+
+
+opacity:1;
+
+
+visibility:visible;
+
+
+transform:
+
+scale(1)
+translateY(0);
+
+
+
+}
+
+
+
+
+/* Animated circle background */
+
+
+.hero::before {
+
+
+content:"";
+
+position:absolute;
+
+
+width:400px;
+
+height:400px;
+
+
+background:
+
+rgba(255,255,255,.15);
+
+
+border-radius:50%;
+
+
+transform:scale(0);
+
+
+transition:.7s;
+
+
+}
+
+
+
+.hero.active::before {
+
+
+transform:scale(4);
+
+
+}
+
+
+
+
+@media(max-width:768px){
+
+
+.hero-main h1{
+
+font-size:2rem;
+
+}
+
+
+.hero-info{
+
+width:90%;
+
+padding:20px;
+
+}
+
+
+.hero-info p{
+
+font-size:.9rem;
+
+}
+
+
+}
 .div1:hover {
     transform: translateY(-5px);
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
