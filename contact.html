@@ -272,11 +272,13 @@
         // Initialize EmailJS with your public key
         (function(){
             emailjs.init("2i8wVvkFuRXB5lBVJ");
+            console.log("✅ EmailJS initialized successfully");
         })();
 
         // Contact Form Handler
         document.getElementById('contactForm').addEventListener('submit', function(e) {
             e.preventDefault();
+            console.log("📝 Form submission started");
 
             // Reset all messages
             document.getElementById('successMessage').style.display = 'none';
@@ -292,8 +294,11 @@
                 phone: document.getElementById('phone').value.trim()
             };
 
+            console.log("📦 Form data collected:", formData);
+
             // Validate required fields
             if (!formData.name || !formData.email || !formData.subject || !formData.message) {
+                console.warn("⚠️ Validation failed: Missing required fields");
                 document.getElementById('errorMessage').textContent = '❌ Please fill out all required fields.';
                 document.getElementById('errorMessage').style.display = 'block';
                 return;
@@ -302,18 +307,23 @@
             // Email validation
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(formData.email)) {
+                console.warn("⚠️ Validation failed: Invalid email format");
                 document.getElementById('errorMessage').textContent = '❌ Please enter a valid email address.';
                 document.getElementById('errorMessage').style.display = 'block';
                 return;
             }
 
+            console.log("✅ All validations passed");
+
             // Show loading message
             document.getElementById('loadingMessage').style.display = 'block';
             document.getElementById('submitBtn').disabled = true;
+            console.log("🔄 Showing loading state and disabling button");
 
             // Send email using EmailJS
+            console.log("🚀 Sending email via EmailJS...");
             emailjs.send(
-                "service_w2agfal",  // Your Service ID
+                "service_h9r9zoq",  // Your Service ID (CORRECTED)
                 "template_0f2q49s",  // Your Template ID
                 {
                     from_name: formData.name,
@@ -325,7 +335,7 @@
                 }
             )
             .then(function(response) {
-                console.log('SUCCESS!', response.status, response.text);
+                console.log('✅ EMAIL SENT SUCCESSFULLY!', response.status, response.text);
                 
                 // Hide loading, show success
                 document.getElementById('loadingMessage').style.display = 'none';
@@ -343,11 +353,19 @@
                 }, 5000);
             })
             .catch(function(error) {
-                console.log('FAILED!', error);
+                console.error('❌ EMAIL FAILED!', error);
+                
+                // Detailed error logging
+                if (error.text) {
+                    console.error('Error details:', error.text);
+                }
+                if (error.status) {
+                    console.error('Error status:', error.status);
+                }
                 
                 // Hide loading, show error
                 document.getElementById('loadingMessage').style.display = 'none';
-                document.getElementById('errorMessage').textContent = '❌ Failed to send message. Please try again or contact directly.';
+                document.getElementById('errorMessage').textContent = '❌ Failed to send message. Check browser console (F12) for details. Try contacting directly at amiralariff97@gmail.com';
                 document.getElementById('errorMessage').style.display = 'block';
                 
                 // Re-enable button
