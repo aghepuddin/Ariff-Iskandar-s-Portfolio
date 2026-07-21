@@ -99,6 +99,7 @@
             border-radius: 5px;
             margin-bottom: 20px;
             border-left: 4px solid #28a745;
+            animation: slideIn 0.3s ease;
         }
 
         .error-message {
@@ -109,6 +110,34 @@
             border-radius: 5px;
             margin-bottom: 20px;
             border-left: 4px solid #f5c6cb;
+            animation: slideIn 0.3s ease;
+        }
+
+        .loading {
+            display: none;
+            background-color: #cfe2ff;
+            color: #084298;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border-left: 4px solid #0c63e4;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
         }
 
         @media (max-width: 768px) {
@@ -160,12 +189,18 @@
 
                 <div class="contact-item">
                     <h4>💼 LinkedIn</h4>
-                     <a href="https://www.linkedin.com/in/ariff-iskandar-39b848336?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank">
-        Ariff Iskandar's LinkedIn
-    </a>
+                    <a href="https://www.linkedin.com/in/ariff-iskandar-39b848336?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank">
+                        Ariff Iskandar's LinkedIn
+                    </a>
                 </div>
 
-
+                <h4 style="margin-top: 25px; color: #2c3e50;">Follow Me</h4>
+                <div class="social-links">
+                    <a href="https://twitter.com/your-profile" target="_blank" class="social-link" title="Twitter">𝕏</a>
+                    <a href="https://linkedin.com/in/your-profile" target="_blank" class="social-link" title="LinkedIn">in</a>
+                    <a href="https://github.com/your-profile" target="_blank" class="social-link" title="GitHub">⚙</a>
+                    <a href="https://instagram.com/your-profile" target="_blank" class="social-link" title="Instagram">📷</a>
+                </div>
 
                 <div style="background-color: #ecf0f1; padding: 15px; border-radius: 8px; margin-top: 20px;">
                     <h4 style="color: #2c3e50; margin-bottom: 10px;">Response Time</h4>
@@ -178,11 +213,15 @@
                 <h2>Send a Message</h2>
                 
                 <div id="successMessage" class="success-message">
-                    Thank you! Your message has been sent successfully. I'll get back to you soon.
+                    ✅ Thank you! Your message has been sent successfully. I'll get back to you soon.
                 </div>
 
                 <div id="errorMessage" class="error-message">
-                    Please fill out all fields correctly before submitting.
+                    ❌ Please fill out all fields correctly before submitting.
+                </div>
+
+                <div id="loadingMessage" class="loading">
+                    ⏳ Sending your message...
                 </div>
 
                 <form id="contactForm">
@@ -211,7 +250,7 @@
                         <input type="tel" id="phone" name="phone">
                     </div>
 
-                    <button type="submit" class="btn">Send Message</button>
+                    <button type="submit" class="btn" id="submitBtn">Send Message</button>
                 </form>
             </div>
         </div>
@@ -226,35 +265,36 @@
     </div>
 
     <script src="script.js"></script>
-    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <!-- EmailJS Library -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/index.min.js"></script>
+    
     <script>
-(function(){
-    emailjs.init("2i8wVvkFuRXB5lBVJ");
-})();
-</script>
-    <script>
+        // Initialize EmailJS with your public key
+        (function(){
+            emailjs.init("2i8wVvkFuRXB5lBVJ");
+        })();
 
-
-        
         // Contact Form Handler
         document.getElementById('contactForm').addEventListener('submit', function(e) {
             e.preventDefault();
 
-            // Reset messages
+            // Reset all messages
             document.getElementById('successMessage').style.display = 'none';
             document.getElementById('errorMessage').style.display = 'none';
+            document.getElementById('loadingMessage').style.display = 'none';
 
             // Get form data
             const formData = {
-                name: document.getElementById('name').value,
-                email: document.getElementById('email').value,
-                subject: document.getElementById('subject').value,
-                message: document.getElementById('message').value,
-                phone: document.getElementById('phone').value
+                name: document.getElementById('name').value.trim(),
+                email: document.getElementById('email').value.trim(),
+                subject: document.getElementById('subject').value.trim(),
+                message: document.getElementById('message').value.trim(),
+                phone: document.getElementById('phone').value.trim()
             };
 
-            // Validate form
+            // Validate required fields
             if (!formData.name || !formData.email || !formData.subject || !formData.message) {
+                document.getElementById('errorMessage').textContent = '❌ Please fill out all required fields.';
                 document.getElementById('errorMessage').style.display = 'block';
                 return;
             }
@@ -262,55 +302,57 @@
             // Email validation
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(formData.email)) {
+                document.getElementById('errorMessage').textContent = '❌ Please enter a valid email address.';
                 document.getElementById('errorMessage').style.display = 'block';
                 return;
             }
 
-            // Show success message
-            document.getElementById('successMessage').style.display = 'block';
+            // Show loading message
+            document.getElementById('loadingMessage').style.display = 'block';
+            document.getElementById('submitBtn').disabled = true;
 
-            // Reset form
-            this.reset();
-document.getElementById('contactForm').addEventListener('submit', function(e) {
-    e.preventDefault();
+            // Send email using EmailJS
+            emailjs.send(
+                "service_w2agfal",  // Your Service ID
+                "template_0f2q49s",  // Your Template ID
+                {
+                    from_name: formData.name,
+                    to_email: "amiralariff97@gmail.com",
+                    user_email: formData.email,
+                    subject: formData.subject,
+                    message: formData.message,
+                    phone: formData.phone || "Not provided"
+                }
+            )
+            .then(function(response) {
+                console.log('SUCCESS!', response.status, response.text);
+                
+                // Hide loading, show success
+                document.getElementById('loadingMessage').style.display = 'none';
+                document.getElementById('successMessage').style.display = 'block';
+                
+                // Reset form
+                document.getElementById('contactForm').reset();
+                
+                // Re-enable button
+                document.getElementById('submitBtn').disabled = false;
 
-    document.getElementById('successMessage').style.display = 'none';
-    document.getElementById('errorMessage').style.display = 'none';
-
-    const formData = {
-        name: document.getElementById('name').value,
-        email: document.getElementById('email').value,
-        subject: document.getElementById('subject').value,
-        message: document.getElementById('message').value,
-        phone: document.getElementById('phone').value
-    };
-
-
-    if (!formData.name || !formData.email || !formData.subject || !formData.message) {
-        document.getElementById('errorMessage').style.display = 'block';
-        return;
-    }
-
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    if (!emailRegex.test(formData.email)) {
-        document.getElementById('errorMessage').style.display = 'block';
-        return;
-    }
-
-
-    // Send email using EmailJS
-    emailjs.send(
-        "YOUR_SERVICE_ID",
-        "YOUR_TEMPLATE_ID",
-        formData
-    )
-    .then(function(response) {
-
-        console.log("SUCCESS!", response.status, response.text);
-
-        document
+                // Auto-hide success message after 5 seconds
+                setTimeout(() => {
+                    document.getElementById('successMessage').style.display = 'none';
+                }, 5000);
+            })
+            .catch(function(error) {
+                console.log('FAILED!', error);
+                
+                // Hide loading, show error
+                document.getElementById('loadingMessage').style.display = 'none';
+                document.getElementById('errorMessage').textContent = '❌ Failed to send message. Please try again or contact directly.';
+                document.getElementById('errorMessage').style.display = 'block';
+                
+                // Re-enable button
+                document.getElementById('submitBtn').disabled = false;
+            });
         });
     </script>
 </body>
