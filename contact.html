@@ -226,9 +226,9 @@
     </style>
     <script>
     let lastScroll = 0;
-const navbar = document.querySelector(".ribbon-menu");
+    const navbar = document.querySelector(".ribbon-menu");
 
-window.addEventListener("scroll", () => {
+    window.addEventListener("scroll", () => {
     let scrollTop = window.scrollY;
 
     if (scrollTop > lastScroll && scrollTop > 80) {
@@ -238,7 +238,7 @@ window.addEventListener("scroll", () => {
     }
 
     lastScroll = scrollTop;
-});
+    });
 </script>
 </head>
 <body>
