@@ -9,6 +9,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Add animations on scroll
     observeElements();
+    initHeroEffect();
+
 });
 
 // Update active menu item based on current page
@@ -193,5 +195,68 @@ window.portfolioUtils = {
     lazyLoadImages,
     observeElements
 };
+// Hero transformation effect
+
+function initHeroEffect(){
+
+
+const hero=document.querySelector(".hero");
+
+
+if(!hero) return;
+
+
+
+// Desktop hover
+
+hero.addEventListener("mouseenter",()=>{
+
+
+hero.classList.add("active");
+
+
+});
+
+
+
+
+hero.addEventListener("mouseleave",()=>{
+
+
+hero.classList.remove("active");
+
+
+});
+
+
+
+
+
+// Mobile touch
+
+hero.addEventListener("touchstart",()=>{
+
+
+hero.classList.toggle("active");
+
+
+});
+
+
+
+
+
+// Remove when scrolling
+
+window.addEventListener("scroll",()=>{
+
+
+hero.classList.remove("active");
+
+
+});
+
+
+}
 
 console.log('Portfolio script loaded successfully!');
