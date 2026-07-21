@@ -326,13 +326,6 @@
             console.log("Template ID: template_s8yd71h");
             
             emailjs.send( "service_tocax0e", "template_s8yd71h", 
-                {
-                    from_name: formData.name,
-                    user_email: formData.email,
-                    subject: formData.subject,
-                    message: formData.message,
-                    phone: formData.phone || "Not provided"
-                }
             );
             .then(function(response) {
                 console.log('✅ EMAIL SENT SUCCESSFULLY!', response.status, response.text);
