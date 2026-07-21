@@ -113,17 +113,6 @@
             animation: slideIn 0.3s ease;
         }
 
-        .loading {
-            display: none;
-            background-color: #cfe2ff;
-            color: #084298;
-            padding: 15px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-            border-left: 4px solid #0c63e4;
-            animation: slideIn 0.3s ease;
-        }
-
         @keyframes slideIn {
             from {
                 opacity: 0;
@@ -220,10 +209,6 @@
                     ❌ Please fill out all fields correctly before submitting.
                 </div>
 
-                <div id="loadingMessage" class="loading">
-                    ⏳ Sending your message...
-                </div>
-
                 <form id="contactForm">
                     <div class="form-group">
                         <label for="name">Full Name *</label>
@@ -254,37 +239,25 @@
         </div>
     </div>
 
-    <!-- EmailJS Library -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/index.min.js"></script>
-    
     <!-- Keep external script.js if it contains other site scripts -->
     <script src="script.js"></script>
 
     <script>
-        // --- EmailJS Integration ---
-        // Initialize EmailJS with your Public Key
-        emailjs.init("2i8wVvkFuRXB5lBVJ"); // Your Public Key
-
-        // Contact Form Handler (uses EmailJS)
+        // Contact Form Handler
         document.getElementById('contactForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            console.log("📝 Form submission started (EmailJS)");
 
             // Reset all messages
             document.getElementById('successMessage').style.display = 'none';
             document.getElementById('errorMessage').style.display = 'none';
-            document.getElementById('loadingMessage').style.display = 'none';
 
             // Get form data
             const user_name = document.getElementById('name').value.trim();
             const user_email = document.getElementById('email').value.trim();
             const subject = document.getElementById('subject').value.trim();
 
-            console.log("📦 Form data collected");
-
             // Validate required fields
             if (!user_name || !user_email || !subject) {
-                console.warn("⚠️ Validation failed: Missing required fields");
                 document.getElementById('errorMessage').textContent = '❌ Please fill out all required fields.';
                 document.getElementById('errorMessage').style.display = 'block';
                 return;
@@ -293,54 +266,19 @@
             // Email validation
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(user_email)) {
-                console.warn("⚠️ Validation failed: Invalid email format");
                 document.getElementById('errorMessage').textContent = '❌ Please enter a valid email address.';
                 document.getElementById('errorMessage').style.display = 'block';
                 return;
             }
 
-            console.log("✅ All validations passed");
+            // Show success message
+            document.getElementById('successMessage').style.display = 'block';
+            document.getElementById('contactForm').reset();
 
-            // Show loading message
-            document.getElementById('loadingMessage').style.display = 'block';
-            document.getElementById('submitBtn').disabled = true;
-            console.log("🔄 Showing loading state and disabling button");
-
-            // Send email using EmailJS
-            console.log("🚀 Sending email via EmailJS");
-
-            emailjs.send(
-                "service_tocax0e",      // Your Service ID
-                "template_s8yed71h",    // Your Template ID
-                {
-                    user_name: user_name,
-                    user_email: user_email,
-                    subject: subject
-                }
-            )
-            .then((response) => {
-                document.getElementById('loadingMessage').style.display = 'none';
-                console.log('✅ EMAIL SENT SUCCESSFULLY', response);
-                
-                document.getElementById('successMessage').style.display = 'block';
-                document.getElementById('contactForm').reset();
-                document.getElementById('submitBtn').disabled = false;
-
-                // Auto-hide success message after 5 seconds
-                setTimeout(() => {
-                    document.getElementById('successMessage').style.display = 'none';
-                }, 5000);
-            })
-            .catch((error) => {
-                console.error('❌ EMAIL SEND FAILED', error);
-                document.getElementById('loadingMessage').style.display = 'none';
-                
-                let errorMsg = '❌ Failed to send message. Please try again or email directly: amiralariff97@gmail.com';
-                
-                document.getElementById('errorMessage').textContent = errorMsg + ' (Check browser console F12 for details)';
-                document.getElementById('errorMessage').style.display = 'block';
-                document.getElementById('submitBtn').disabled = false;
-            });
+            // Auto-hide success message after 5 seconds
+            setTimeout(() => {
+                document.getElementById('successMessage').style.display = 'none';
+            }, 5000);
         });
     </script>
 </body>
