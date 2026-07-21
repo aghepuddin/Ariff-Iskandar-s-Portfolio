@@ -322,9 +322,12 @@
 
             // Send email using EmailJS
             console.log("🚀 Sending email via EmailJS...");
+            console.log("Service ID: service_h9r9zoq");
+            console.log("Template ID: template_s8yd71h");
+            
             emailjs.send(
                 "service_h9r9zoq",  // Your Service ID
-                "template_s8yd71h",  // Your Template ID (CORRECTED)
+                "template_s8yd71h",  // Your Template ID
                 {
                     from_name: formData.name,
                     to_email: "amiralariff97@gmail.com",
@@ -356,8 +359,9 @@
                 console.error('❌ EMAIL FAILED!', error);
                 
                 // Detailed error logging
+                console.error('Full error object:', error);
                 if (error.text) {
-                    console.error('Error details:', error.text);
+                    console.error('Error text:', error.text);
                 }
                 if (error.status) {
                     console.error('Error status:', error.status);
@@ -365,7 +369,20 @@
                 
                 // Hide loading, show error
                 document.getElementById('loadingMessage').style.display = 'none';
-                document.getElementById('errorMessage').textContent = '❌ Failed to send message. Check browser console (F12) for details. Try contacting directly at amiralariff97@gmail.com';
+                
+                let errorMsg = '❌ Failed to send message. ';
+                if (error.text === 'Invalid service ID') {
+                    errorMsg += 'Invalid EmailJS Service ID.';
+                } else if (error.text === 'Invalid template ID') {
+                    errorMsg += 'Invalid EmailJS Template ID.';
+                } else if (error.text === 'Invalid access token') {
+                    errorMsg += 'Invalid EmailJS Public Key.';
+                } else {
+                    errorMsg += 'Try again or email directly: amiralariff97@gmail.com';
+                }
+                errorMsg += ' Check browser console (F12) for details.';
+                
+                document.getElementById('errorMessage').textContent = errorMsg;
                 document.getElementById('errorMessage').style.display = 'block';
                 
                 // Re-enable button
