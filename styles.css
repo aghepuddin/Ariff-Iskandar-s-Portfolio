@@ -198,7 +198,7 @@ body {
 }
 
 .skills-preview li:before {
-    content: "✓ ";
+    content: "• ";
     color: var(--secondary-color);
     font-weight: bold;
     margin-right: 8px;
