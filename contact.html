@@ -325,9 +325,7 @@
             console.log("Service ID: service_h9r9zoq");
             console.log("Template ID: template_s8yd71h");
             
-            emailjs.send(
-                "service_h9r9zoq",  // Your Service ID
-                "template_s8yd71h",  // Your Template ID
+            emailjs.send( "service_tocax0e", "template_s8yd71h", 
                 {
                     from_name: formData.name,
                     user_email: formData.email,
@@ -335,7 +333,7 @@
                     message: formData.message,
                     phone: formData.phone || "Not provided"
                 }
-            )
+            );
             .then(function(response) {
                 console.log('✅ EMAIL SENT SUCCESSFULLY!', response.status, response.text);
                 
