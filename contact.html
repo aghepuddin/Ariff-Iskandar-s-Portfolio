@@ -263,10 +263,10 @@
             </div>
         </div>
     </div>
-
-    <script src="script.js"></script>
-    <!-- EmailJS Library -->
+   <!-- EmailJS Library -->
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/index.min.js"></script>
+    <script src="script.js"></script>
+ 
     
     <script>
         // Initialize EmailJS with your public key
@@ -330,7 +330,6 @@
                 "template_s8yd71h",  // Your Template ID
                 {
                     from_name: formData.name,
-                    to_email: "amiralariff97@gmail.com",
                     user_email: formData.email,
                     subject: formData.subject,
                     message: formData.message,
