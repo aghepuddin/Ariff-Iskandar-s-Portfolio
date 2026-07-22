@@ -1,111 +1,1165 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ariff Iskandar - Professional Portfolio</title>
-    <link rel="stylesheet" href="styles.css">
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Ariff Iskandar - Professional Portfolio</title>
+
+
+<style>
+
+/* =====================
+ROOT
+===================== */
+
+:root {
+
+    --primary-color:#2c3e50;
+    --secondary-color:#3498db;
+    --accent-color:#e74c3c;
+    --light-bg:#ecf0f1;
+    --text-dark:#2c3e50;
+    --text-light:#7f8c8d;
+
+}
+
+
+
+*{
+
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+
+}
+
+
+
+body{
+
+    font-family:'Segoe UI',Tahoma,sans-serif;
+
+    background:#f5f5f5;
+
+    color:var(--text-dark);
+
+    line-height:1.6;
+
+    overflow-x:hidden;
+
+}
+
+
+
+
+/* =====================
+RIBBON MENU
+===================== */
+
+
+.ribbon-menu{
+
+
+    position:fixed;
+
+    top:0;
+
+    left:0;
+
+    width:100%;
+
+    background:
+    linear-gradient(
+        135deg,
+        var(--primary-color),
+        var(--secondary-color)
+    );
+
+
+    z-index:1000;
+
+    box-shadow:
+    0 5px 20px rgba(0,0,0,.2);
+
+
+    transition:.3s ease;
+
+
+}
+
+
+
+.menu-items{
+
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+
+}
+
+
+
+.menu-item{
+
+
+    flex:1;
+
+    text-align:center;
+
+
+    padding:15px;
+
+
+    color:white;
+
+    text-decoration:none;
+
+
+    font-weight:600;
+
+    font-size:14px;
+
+
+    border-right:
+    1px solid rgba(255,255,255,.2);
+
+
+    transition:.3s;
+
+
+}
+
+
+
+.menu-item:hover,
+.menu-item.active{
+
+
+    background:var(--accent-color);
+
+
+}
+
+
+
+
+
+
+
+/* =====================
+HERO SECTION
+===================== */
+
+
+.hero{
+
+
+    position:relative;
+
+
+    min-height:700px;
+
+
+    margin:80px 40px;
+
+
+    border-radius:15px;
+
+
+    background:
+    linear-gradient(
+        135deg,
+        var(--primary-color),
+        var(--secondary-color)
+    );
+
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+
+    overflow:hidden;
+
+
+    color:white;
+
+
+    box-shadow:
+    0 10px 30px rgba(0,0,0,.2);
+
+
+}
+
+
+
+
+.hero-main{
+
+
+    position:absolute;
+
+
+    text-align:center;
+
+
+    transition:.5s ease;
+
+
+}
+
+
+
+.hero-main h1{
+
+
+    font-size:4rem;
+
+    margin-bottom:15px;
+
+
+}
+
+
+
+.subtitle{
+
+
+    font-size:1.5rem;
+
+    opacity:.9;
+
+
+}
+
+
+
+
+/* HERO INFORMATION */
+
+
+.hero-info{
+
+
+    position:absolute;
+
+
+    width:85%;
+
+    max-width:900px;
+
+
+    padding:35px;
+
+
+    background:
+    rgba(255,255,255,.15);
+
+
+    backdrop-filter:blur(15px);
+
+
+    border-radius:20px;
+
+
+    opacity:0;
+
+    visibility:hidden;
+
+
+    transform:
+    scale(.7)
+    translateY(80px);
+
+
+
+    transition:.6s ease;
+
+
+}
+
+
+
+
+.hero-info h3{
+
+
+    margin-bottom:20px;
+
+    font-size:1.8rem;
+
+
+}
+
+
+
+.hero-info p{
+
+
+    text-align:justify;
+
+    margin-bottom:15px;
+
+    line-height:1.8;
+
+
+}
+
+
+
+
+
+/* HERO ACTIVE */
+
+
+.hero.active .hero-main{
+
+
+    opacity:0;
+
+    transform:
+    translateY(-50px)
+    scale(.8);
+
+
+}
+
+
+
+
+.hero.active .hero-info{
+
+
+    opacity:1;
+
+    visibility:visible;
+
+
+    transform:
+    scale(1)
+    translateY(0);
+
+
+}
+
+
+
+
+.hero::before{
+
+
+    content:"";
+
+    position:absolute;
+
+
+    width:400px;
+
+    height:400px;
+
+
+    background:
+    rgba(255,255,255,.15);
+
+
+    border-radius:50%;
+
+
+    transform:scale(0);
+
+
+    transition:.7s;
+
+
+}
+
+
+
+
+.hero.active::before{
+
+
+    transform:scale(4);
+
+
+}
+
+
+
+
+
+
+
+/* =====================
+ABOUT SECTION
+===================== */
+
+
+.about-section{
+
+
+    background:white;
+
+
+    margin:40px;
+
+    padding:40px;
+
+
+    border-radius:15px;
+
+
+    box-shadow:
+    0 5px 20px rgba(0,0,0,.1);
+
+
+}
+
+
+
+.about-section h2{
+
+
+    font-size:2rem;
+
+    margin-bottom:20px;
+
+
+    border-bottom:
+    3px solid var(--secondary-color);
+
+
+}
+
+
+
+.about-section p{
+
+
+    color:var(--text-light);
+
+    text-align:justify;
+
+    line-height:1.8;
+
+
+}
+
+
+
+
+
+
+
+/* =====================
+SKILLS
+===================== */
+
+
+.skills-preview{
+
+
+    margin-top:30px;
+
+    background:var(--light-bg);
+
+
+    padding:25px;
+
+    border-radius:10px;
+
+
+}
+
+
+
+
+.skills-preview ul{
+
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(3,1fr);
+
+
+    gap:10px;
+
+
+    list-style:none;
+
+
+}
+
+
+
+.skills-preview li{
+
+
+    background:white;
+
+
+    padding:12px;
+
+
+    border-radius:8px;
+
+
+}
+
+
+
+
+
+
+
+
+/* SCROLL TOP */
+
+
+.scroll-top{
+
+
+    position:fixed;
+
+    bottom:20px;
+
+    right:20px;
+
+
+}
+
+
+
+
+
+
+/* MOBILE */
+
+
+@media(max-width:768px){
+
+
+
+.menu-item{
+
+    font-size:11px;
+
+    padding:12px 5px;
+
+}
+
+
+
+.hero{
+
+
+    margin:70px 15px 30px;
+
+    min-height:600px;
+
+
+}
+
+
+
+.hero-main h1{
+
+
+    font-size:2.5rem;
+
+
+}
+
+
+
+.subtitle{
+
+
+    font-size:1rem;
+
+}
+
+
+
+.hero-info{
+
+
+    width:90%;
+
+    padding:20px;
+
+
+}
+
+
+
+.skills-preview ul{
+
+
+    grid-template-columns:1fr;
+
+
+}
+
+
+
+.about-section{
+
+
+    margin:20px;
+
+    padding:20px;
+
+
+}
+
+
+}
+
+
+
+</style>
+
 </head>
+
+
 <body>
-    <!-- Ribbon Menu -->
-    <div class="ribbon-menu">
-        <nav class="menu-items">
-            <a href="index.html" class="menu-item active">Home</a>
-            <a href="education.html" class="menu-item">Education</a>
-            <a href="projects.html" class="menu-item">Projects</a>
-            <a href="contact.html" class="menu-item">Contact</a>
-        </nav>
-    </div>
+
+
+<!-- NAVBAR -->
+
+<div class="ribbon-menu">
+
+
+<nav class="menu-items">
+
+
+<a href="index.html" class="menu-item active">
+Home
+</a>
+
+
+<a href="education.html" class="menu-item">
+Education
+</a>
+
+
+<a href="projects.html" class="menu-item">
+Projects
+</a>
+
+
+<a href="contact.html" class="menu-item">
+Contact
+</a>
+
+
+</nav>
+
+
+</div>
+
+
+
+
+
+<!-- HERO -->
+
+
+<section class="hero" id="hero">
+
+
+<div class="hero-main">
+
+
+<h1>
+Ariff Iskandar
+</h1>
+
+
+<p class="subtitle">
+Application & Web Developer | IT | SAP ERP System
+</p>
+
+
+</div>
+
+
+
+
+<div class="hero-info">
+
+
+<h3>
+Professional Profile
+</h3>
+
+
+<p>
+
+I am a Computer Science graduate specializing in
+software development, enterprise systems,
+SAP ERP solutions, data analytics, and multimedia technology.
+
+</p>
+
+
+<p>
+
+I have experience developing web applications,
+mobile applications, desktop systems,
+Unity VR training simulators,
+database systems,
+and business automation solutions.
+
+</p>
+
+
+</div>
+
+
+
+</section>
+
+
+
+
+
+<!-- ABOUT -->
+
+
+<section class="about-section">
+
+
+<h2>
+About Me
+</h2>
+
+
+<p>
+
+I am a Computer Science graduate with a versatile technical background in software development, enterprise systems, and data-driven solutions.
+
+I have hands-on experience developing mobile applications, web applications, desktop systems, Unity VR training simulators, database systems, SAP ERP solutions, and data analytics dashboards.
+
+I enjoy solving complex problems through innovative and practical software solutions while continuously improving my technical skills.
+
+</p>
+
+
+
+
+<div class="skills-preview">
+
+
+<h3>
+Skills Set
+</h3>
+
+
+<ul>
+
+<li>JavaScript</li>
+<li>Web Development</li>
+<li>SAP Business One ERP</li>
+<li>SQL & MySQL</li>
+<li>Data Analytics</li>
+<li>Power BI</li>
+<li>Unity VR Development</li>
+<li>Mobile Development</li>
+<li>UI/UX Design</li>
+
+</ul>
+
+
+</div>
+
+
+</section>
+
+
 <script>
-    let lastScroll = 0;
+
+
+/* =========================
+NAVBAR HIDE ON SCROLL
+========================= */
+
+
+let lastScroll = 0;
+
 const navbar = document.querySelector(".ribbon-menu");
 
-window.addEventListener("scroll", () => {
-    let scrollTop = window.scrollY;
 
-    if (scrollTop > lastScroll && scrollTop > 80) {
+window.addEventListener("scroll",()=>{
+
+
+    let currentScroll = window.scrollY;
+
+
+
+    if(currentScroll > lastScroll && currentScroll > 80){
+
         navbar.style.transform = "translateY(-100%)";
-    } else {
-        navbar.style.transform = "translateY(0)";
+
     }
 
-    lastScroll = scrollTop;
+    else{
+
+        navbar.style.transform = "translateY(0)";
+
+    }
+
+
+
+    lastScroll = currentScroll;
+
+
 });
+
+
+
+
+
+
+
+/* =========================
+HERO HOVER EFFECT
+========================= */
+
+
+const hero = document.getElementById("hero");
+
+
+
+if(hero){
+
+
+
+    // Desktop mouse enter
+
+    hero.addEventListener("mouseenter",()=>{
+
+
+        hero.classList.add("active");
+
+
+    });
+
+
+
+
+
+    // Desktop mouse leave
+
+    hero.addEventListener("mouseleave",()=>{
+
+
+        hero.classList.remove("active");
+
+
+    });
+
+
+
+
+
+
+    // Mobile touch
+
+    hero.addEventListener("touchstart",()=>{
+
+
+        hero.classList.toggle("active");
+
+
+    });
+
+
+
+
+
+
+    // Remove expanded hero when scrolling
+
+    window.addEventListener("scroll",()=>{
+
+
+        hero.classList.remove("active");
+
+
+    });
+
+
+
+}
+
+
+
+
+
+
+
+
+/* =========================
+ACTIVE MENU
+========================= */
+
+
+function updateActiveMenu(){
+
+
+    const currentPage =
+    window.location.pathname.split("/").pop()
+    || "index.html";
+
+
+
+    const menuItems =
+    document.querySelectorAll(".menu-item");
+
+
+
+    menuItems.forEach(item=>{
+
+
+        if(item.getAttribute("href") === currentPage){
+
+
+            item.classList.add("active");
+
+
+        }
+
+
+        else{
+
+
+            item.classList.remove("active");
+
+
+        }
+
+
+    });
+
+
+}
+
+
+
+updateActiveMenu();
+
+
+
+
+
+
+
+/* =========================
+SMOOTH SCROLL
+========================= */
+
+
+document.querySelectorAll('a[href^="#"]')
+.forEach(anchor=>{
+
+
+    anchor.addEventListener("click",(e)=>{
+
+
+        e.preventDefault();
+
+
+
+        const target =
+        document.querySelector(
+            anchor.getAttribute("href")
+        );
+
+
+
+        if(target){
+
+
+            target.scrollIntoView({
+
+                behavior:"smooth"
+
+            });
+
+
+        }
+
+
+
+    });
+
+
+
+});
+
+
+
+
+
+
+
+/* =========================
+SCROLL TO TOP BUTTON
+========================= */
+
+
+const scrollButton =
+document.createElement("button");
+
+
+
+scrollButton.innerHTML="↑";
+
+
+
+scrollButton.style.position="fixed";
+
+scrollButton.style.bottom="20px";
+
+scrollButton.style.right="20px";
+
+scrollButton.style.width="50px";
+
+scrollButton.style.height="50px";
+
+scrollButton.style.border="none";
+
+scrollButton.style.borderRadius="50%";
+
+scrollButton.style.background="#3498db";
+
+scrollButton.style.color="white";
+
+scrollButton.style.fontSize="25px";
+
+scrollButton.style.cursor="pointer";
+
+scrollButton.style.display="none";
+
+scrollButton.style.zIndex="999";
+
+
+
+document.body.appendChild(scrollButton);
+
+
+
+
+
+window.addEventListener("scroll",()=>{
+
+
+    if(window.scrollY > 300){
+
+
+        scrollButton.style.display="block";
+
+
+    }
+
+    else{
+
+
+        scrollButton.style.display="none";
+
+
+    }
+
+
+});
+
+
+
+
+
+
+scrollButton.addEventListener("click",()=>{
+
+
+    window.scrollTo({
+
+        top:0,
+
+        behavior:"smooth"
+
+    });
+
+
+});
+
+
+
+
+
+
+/* BUTTON HOVER */
+
+
+scrollButton.addEventListener("mouseenter",()=>{
+
+
+    scrollButton.style.background="#e74c3c";
+
+
+});
+
+
+
+scrollButton.addEventListener("mouseleave",()=>{
+
+
+    scrollButton.style.background="#3498db";
+
+
+});
+
+
+
+
+
+
+
+/* =========================
+PAGE LOAD EFFECT
+========================= */
+
+
+window.addEventListener("load",()=>{
+
+
+    document.body.style.opacity="1";
+
+
+});
+
+
+
+
+
+
+console.log("Portfolio JavaScript Loaded Successfully");
+
+
 </script>
-    <!-- Main Content -->
-    <div class="container">
-        <div class="parent">
-            <!-- Hero Section -->
-            <section class="hero" id="hero">
-                <div class="hero-main">
-                <h1>Ariff Iskandar</h1>
-                <p class="subtitle"> Application & Web Developer | IT | SAP ERP System </p>
-            </div>
-            <!-- Hidden Expanded Information -->
-
-    <div class="hero-info">
 
 
-        <h2>
-            TestingTestingTesting
-        </h2>
-
-
-        <p>
-            TestingTestingTestingTestingTestingTesting
-        </p>
-
-
-        <p>
-            TestingTestingTestingTestingTestingTestingTestingTestingTesting
-        </p>
-
-
-        <p>
-           TestingTestingTestingTestingTestingTestingTestingTestingTesting
-        </p>
-
-
-
-    </div>
-             </div>
-
-
-            <!-- About/Introduction Section -->
-            <div class="div2 about-section">
-                <h2>About Me</h2>
-                <div class="about-content">
-                    <h3>Creative Mind, Technical Precision</h3>
-                    <p style="text-align: justify;">I am a Computer Science graduate with a versatile technical background in software development, enterprise systems, and data-driven solutions.
-                    I have hands-on experience developing mobile applications, web applications, desktop systems, and immersive 2D and 3D training simulators using Unity. 
-                    My expertise spans programming, database management, SAP & ERP systems, data analysis, and UI/UX design, enabling me to bridge technical implementation with business needs. I thrive in collaborative environments, adapt quickly to new technologies, and enjoy solving complex problems through innovative and practical software solutions. 
-                    I am eager to contribute my skills while continuously growing as an IT professional with the powerful data analyst and development systems as a skill set. </p>
-                    
-                    <div class="skills-preview">
-                        <h3>Skills Set</h3>
-                        <ul>
-                            <li>JavaScript & Modern Frameworks</li>
-                            <li>UI/UX Design</li>
-                            <li>Software Development</li>
-                            <li>Web Development</li>
-                            <li>SAP Business One (ERP)</li>
-                            <li>Data Analytics</li>
-                            <li>Mobile Application Development</li>
-                            <li>Database Management</li>
-                            <li>UI/UX Design</li>
-                            <li>Power BI</li>
-                            <li>Microsoft Excel</li>
-                            <li>SQL & MySQL</li>
-                            <li>Git & GitHub</li>
-                            <li>Unity & VR Development</li>
-                            <li>Problem Solving</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script src="script.js"></script>
 </body>
+
 </html>
