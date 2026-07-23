@@ -5,45 +5,510 @@
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="styles.css">
+
 <title>Ariff Iskandar - Professional Portfolio</title>
+
 
 <!-- Bootstrap 5 -->
 <link 
 href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" 
 rel="stylesheet">
 
+
+<style>
+
+/* =====================
+GLOBAL
+===================== */
+
+:root{
+    --primary:#2c3e50;
+    --secondary:#3498db;
+    --accent:#e74c3c;
+}
+
+
+body{
+
+    font-family:'Segoe UI',sans-serif;
+    background:#f5f5f5;
+    overflow-x:hidden;
+
+}
+
+
+
+/* =====================
+NAVBAR
+===================== */
+
+
+.navbar{
+
+    background:
+    linear-gradient(
+        135deg,
+        var(--primary),
+        var(--secondary)
+    );
+
+    box-shadow:
+    0 5px 20px rgba(0,0,0,.2);
+  position: fixed;
+    top:0;
+    width:100%;
+    z-index:9999;
+    transition:0.4s ease;
+
+.navbar-brand{
+    margin-left:-85px;
+}
+}
+.navbar.hide{
+    transform: translateY(-100%);
+}
+
+.nav-link{
+
+    color:white!important;
+    font-weight:600;
+    text-align:center;
+
+}
+
+
+.nav-link:hover,
+.nav-link.active{
+
+    background:var(--accent);
+    border-radius:8px;
+
+}
+
+
+
+/* =====================
+HERO
+===================== */
+
+
+.hero{
+
+  
+    width:100%;
+    margin:80px auto 20px;
+    min-height:300px;
+    background:
+    linear-gradient(
+        135deg,
+        var(--primary),
+        var(--secondary)
+    );
+
+    border-radius:20px;
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    position:relative;
+    overflow:hidden;
+    transition:.6s ease;
+    box-shadow:
+    0 10px 30px rgba(0,0,0,.2);
+}
+
+
+
+.hero-main{
+    transition:.5s ease;
+}
+
+
+
+.hero-main h1{
+    font-size:4rem;
+    font-weight:700;
+}
+
+
+
+.hero-info{
+
+
+    position:absolute;
+    width:85%;
+    max-width:900px;
+    background:
+    rgba(255,255,255,.15);
+    backdrop-filter:blur(15px);
+    border-radius:20px;
+    padding:35px;
+    opacity:0;
+    visibility:hidden;
+    transform:
+    scale(.7)
+    translateY(80px);
+    transition:.6s ease;
+
+
+}
+
+
+
+.hero-info p{
+
+    line-height:1.8;
+    text-align:justify;
+
+}
+
+
+
+
+/* EXPAND */
+
+.hero.active{
+
+    min-height:500px;
+
+}
+
+
+
+.hero.active .hero-main{
+
+
+    opacity:0;
+
+    transform:
+    translateY(-80px);
+
+}
+
+
+
+.hero.active .hero-info{
+
+
+    opacity:1;
+
+    visibility:visible;
+
+
+    transform:
+    scale(1)
+    translateY(0);
+
+}
+
+
+
+/* Circle animation */
+
+.hero::before{
+
+
+content:"";
+
+
+position:absolute;
+
+
+width:700px;
+
+height:700px;
+
+
+background:
+rgba(255,255,255,.15);
+
+
+border-radius:50%;
+
+
+transform:scale(0);
+
+
+transition:.7s;
+
+
+}
+
+
+.hero.active::before{
+
+transform:scale(4);
+
+}
+
+
+
+/* =====================
+ABOUT
+===================== */
+
+
+.about-card{
+
+
+background:white;
+
+
+border-radius:20px;
+
+
+box-shadow:
+0 5px 20px rgba(0,0,0,.1);
+
+
+}
+
+
+
+.skill-item{
+
+
+background:#ecf0f1;
+
+
+padding:12px;
+
+
+border-radius:10px;
+
+
+text-align:center;
+
+
+font-weight:600;
+
+
+transition:.3s;
+
+
+}
+
+
+
+.skill-item:hover{
+
+
+background:#3498db;
+
+color:white;
+
+
+}
+
+
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+
+.hero{
+
+width:92%;
+min-height:250px;
+
+}
+
+
+
+.hero-main h1{
+
+font-size:2.5rem;
+
+}
+
+
+
+.hero-info{
+
+width:90%;
+
+padding:25px;
+
+}
+
+
+
+.hero.active{
+
+min-height:750px;
+
+}
+
+
+
+}
+
+
+
+@media (max-width:991px){
+
+    .hero{
+        width:95%;
+        margin:90px auto 30px;
+        min-height:300px;
+        padding:50px 30px;
+    }
+
+    .hero-main h1{
+        font-size:3rem;
+    }
+
+    .hero-main .lead{
+        font-size:1.15rem;
+    }
+
+    .hero-info{
+        width:90%;
+        padding:28px;
+    }
+
+    .hero-info h3{
+        font-size:1.6rem;
+    }
+
+    .hero-info h5{
+        font-size:1rem;
+    }
+
+    .hero-info p{
+        font-size:.95rem;
+        line-height:1.7;
+    }
+
+    .hero.active{
+        min-height:auto;
+        padding:70px 30px;
+    }
+
+    .about-card{
+        padding:35px !important;
+    }
+
+}
+
+@media (max-width:430px){
+
+    /* Hero */
+
+    .hero{
+        width:96%;
+        margin:75px auto 20px;
+        padding:30px 18px;
+        min-height:auto;
+        border-radius:15px;
+    }
+
+    /* Main title */
+
+    .hero-main h1{
+        font-size:2rem;
+        line-height:1.2;
+    }
+
+    /* Subtitle */
+
+    .hero-main .lead{
+        font-size:0.95rem;
+    }
+
+    /* Expanded card */
+
+    .hero-info{
+        width:94%;
+        padding:18px;
+    }
+
+    .hero-info h3{
+        font-size:1.2rem;
+    }
+
+    .hero-info h5{
+        font-size:0.95rem;
+    }
+
+    .hero-info p{
+        font-size:0.9rem;
+        line-height:1.6;
+        text-align:left;
+    }
+
+    /* About */
+
+    .about-card{
+        padding:20px !important;
+    }
+
+    .about-card h2{
+        font-size:1.7rem;
+    }
+
+    .about-card h3{
+        font-size:1.3rem;
+    }
+
+    .about-card p{
+        font-size:0.9rem;
+    }
+
+    /* Skills */
+
+    .skill-item{
+        font-size:0.85rem;
+        padding:10px;
+    }
+
+}
+
+</style>
 </head>
-
-
 <body>
 
 
 <!-- NAVBAR -->
-    
+
 <nav class="navbar navbar-expand-lg fixed-top">
+
+
 <div class="container">
+
+
 <a class="navbar-brand text-white fw-bold" id="deviceGreeting">
 Ariff Iskandar's Portfolio
 </a>
+
+
+
 <button 
 class="navbar-toggler bg-light"
 data-bs-toggle="collapse"
 data-bs-target="#menu">
 
 <span class="navbar-toggler-icon"></span>
+
 </button>
 
+
+
 <div class="collapse navbar-collapse" id="menu">
+
+
 <ul class="navbar-nav ms-auto">
-    
+
+
 <li class="nav-item">
 <a class="nav-link active px-4"
 href="index.html">
 Home
 </a>
-    
 </li>
+
+
 <li class="nav-item">
 <a class="nav-link px-4"
 href="education.html">
@@ -51,50 +516,104 @@ Education
 </a>
 </li>
 
+
 <li class="nav-item">
 <a class="nav-link px-4"
 href="projects.html">
 Projects
 </a>
 </li>
-    
+
+
 <li class="nav-item">
 <a class="nav-link px-4"
 href="contact.html">
 Contact
-</a></li></ul></div></div></nav>
+</a>
+</li>
+</ul>
+</div>
+</div>
+</nav>
 
 <!-- HERO -->
+
 <section class="container">
+
     <div class="hero" id="hero">
+
         <div class="hero-main text-center">
+
 
 <h1>
 Ariff Iskandar
 </h1>
+
+
 <p class="lead">
+
 Application & Web Developer | IT | SAP ERP | Digital Solution
+
 </p>
+
+
 </div>
 
-<div class="hero-info">
-<h3>Hi, I am AMIRULARIFF ISKANDAR BIN ADNAN</h3>
 
-<h5>I transform ideas into impactful digital solutions by combining software development,
-enterprise technology, and creative problem-solving.</h5>
+
+<div class="hero-info">
+
+
+<h3>
+
+Hi, I am AMIRULARIFF ISKANDAR BIN ADNAN
+
+</h3>
+
+
+<h5>
+
+I transform ideas into impactful digital solutions by combining software development,
+enterprise technology, and creative problem-solving.
+
+</h5>
+
+
 <hr>
 
-<p>A technology enthusiast with experience in developing software solutions,
-enterprise applications, and interactive digital systems.</p>
 
-<p>Skilled in web development, application development,
+<p>
+
+A technology enthusiast with experience in developing software solutions,
+enterprise applications, and interactive digital systems.
+
+</p>
+
+
+<p>
+
+Skilled in web development, application development,
 database management, SAP Business One ERP,
-data analytics, and multimedia technologies.</p>
+data analytics, and multimedia technologies.
 
-<p>Experienced in transforming ideas into practical solutions through academic projects,
+</p>
+
+
+<p>
+
+Experienced in transforming ideas into practical solutions through academic projects,
 software development, mobile applications,
-VR Training Simulator applications, and industry-based system support.</p>
-</div></section>
+VR Training Simulator applications, and industry-based system support.
+
+</p>
+
+
+</div>
+
+
+</section>
+
+
 
 
 
@@ -113,7 +632,11 @@ VR Training Simulator applications, and industry-based system support.</p>
 About Me
 
 </h2>
+
+
 <p class="text-secondary">
+
+
 I am a Computer Science graduate with a versatile technical background in software development,
 enterprise systems, and data-driven solutions.
 
@@ -122,30 +645,86 @@ web applications, desktop systems,
 Unity VR training simulators,
 database systems,
 SAP ERP solutions,
-and data analytics dashboards.</p>
+and data analytics dashboards.
+
+
+</p>
+
+
+
 
 <h3 class="mt-4">
 
 Skills Set
+
 </h3>
 
 
-<ul>
 
-<li>JavaScript</li>
-<li>Web Development</li>
-<li>SAP Business One ERP</li>
-<li>SQL & MySQL</li>
-<li>Data Analytics</li>
-<li>Power BI</li>
-<li>Unity VR Development</li>
-<li>Mobile Development</li>
-<li>UI/UX Design</li>
+<div class="row g-3 mt-2">
 
-</ul></div></section>
+
+<div class="col-6 col-md-4">
+<div class="skill-item">
+JavaScript
+</div>
+</div>
+
+
+<div class="col-6 col-md-4">
+<div class="skill-item">
+Web Development
+</div>
+</div>
+
+
+<div class="col-6 col-md-4">
+<div class="skill-item">
+SAP Business One
+</div>
+</div>
+
+
+<div class="col-6 col-md-4">
+<div class="skill-item">
+SQL & MySQL
+</div>
+</div>
+
+
+<div class="col-6 col-md-4">
+<div class="skill-item">
+Data Analytics
+</div>
+</div>
+
+
+<div class="col-6 col-md-4">
+<div class="skill-item">
+Unity VR
+</div>
+</div>
+
+
+
+</div>
+
+
+</div>
+
+
+</section>
+
+
+
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
 <script>
+
 
 const hero =
 document.getElementById("hero");
@@ -255,6 +834,7 @@ Welcome Visitor
 </span>
 `;
 </script>
+
 
 
 </body>
