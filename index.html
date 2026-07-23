@@ -8,6 +8,10 @@
 <link rel="stylesheet" href="styles.css">
 <title>Ariff Iskandar - Professional Portfolio</title>
 
+<!-- Bootstrap 5 -->
+<link 
+href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" 
+rel="stylesheet">
 
 </head>
 
@@ -16,100 +20,81 @@
 
 
 <!-- NAVBAR -->
+    
+<nav class="navbar navbar-expand-lg fixed-top">
+<div class="container">
+<a class="navbar-brand text-white fw-bold" id="deviceGreeting">
+Ariff Iskandar's Portfolio
+</a>
+<button 
+class="navbar-toggler bg-light"
+data-bs-toggle="collapse"
+data-bs-target="#menu">
 
-<div class="ribbon-menu">
+<span class="navbar-toggler-icon"></span>
+</button>
 
-
-<nav class="menu-items">
-
-
-<a href="index.html" class="menu-item active">
+<div class="collapse navbar-collapse" id="menu">
+<ul class="navbar-nav ms-auto">
+    
+<li class="nav-item">
+<a class="nav-link active px-4"
+href="index.html">
 Home
 </a>
-
-
-<a href="education.html" class="menu-item">
+    
+</li>
+<li class="nav-item">
+<a class="nav-link px-4"
+href="education.html">
 Education
 </a>
+</li>
 
-
-<a href="projects.html" class="menu-item">
+<li class="nav-item">
+<a class="nav-link px-4"
+href="projects.html">
 Projects
 </a>
-
-
-<a href="contact.html" class="menu-item">
+</li>
+    
+<li class="nav-item">
+<a class="nav-link px-4"
+href="contact.html">
 Contact
-</a>
-
-
-</nav>
-
-
-</div>
-
-
-
-
+</a></li></ul></div></div></nav>
 
 <!-- HERO -->
-
-
-<section class="hero" id="hero">
-
-
-<div class="hero-main">
-
+<section class="container">
+    <div class="hero" id="hero">
+        <div class="hero-main text-center">
 
 <h1>
 Ariff Iskandar
 </h1>
-
-
-<p class="subtitle">
-Application & Web Developer | IT | SAP ERP System
+<p class="lead">
+Application & Web Developer | IT | SAP ERP | Digital Solution
 </p>
-
-
 </div>
-
-
-
 
 <div class="hero-info">
+<h3>Hi, I am AMIRULARIFF ISKANDAR BIN ADNAN</h3>
 
+<h5>I transform ideas into impactful digital solutions by combining software development,
+enterprise technology, and creative problem-solving.</h5>
+<hr>
 
-<h3>
-Hi, I am AMIRULARIFF ISKANDAR BIN ADNAN
-</h3>
+<p>A technology enthusiast with experience in developing software solutions,
+enterprise applications, and interactive digital systems.</p>
 
+<p>Skilled in web development, application development,
+database management, SAP Business One ERP,
+data analytics, and multimedia technologies.</p>
 
-<p>
-
-I am a Computer Science graduate specializing in
-software development, enterprise systems,
-SAP ERP solutions, data analytics, and multimedia technology.
-
-</p>
-
-
-<p>
-
-I have experience developing web applications,
-mobile applications, desktop systems,
-Unity VR training simulators,
-database systems,
-and business automation solutions.
-
-</p>
-
-
-</div>
-
-
-
-</section>
-
+<p>Experienced in transforming ideas into practical solutions through academic projects,
+software development, mobile applications,
+VR Training Simulator applications, and industry-based system support.</p>
+</div></section>
 
 
 
@@ -117,31 +102,30 @@ and business automation solutions.
 <!-- ABOUT -->
 
 
-<section class="about-section">
+<section class="container mb-5">
 
 
-<h2>
+<div class="about-card p-5">
+
+
+<h2 class="border-bottom pb-3">
+
 About Me
+
 </h2>
+<p class="text-secondary">
+I am a Computer Science graduate with a versatile technical background in software development,
+enterprise systems, and data-driven solutions.
 
+I have hands-on experience developing mobile applications,
+web applications, desktop systems,
+Unity VR training simulators,
+database systems,
+SAP ERP solutions,
+and data analytics dashboards.</p>
 
-<p>
+<h3 class="mt-4">
 
-I am a Computer Science graduate with a versatile technical background in software development, enterprise systems, and data-driven solutions.
-
-I have hands-on experience developing mobile applications, web applications, desktop systems, Unity VR training simulators, database systems, SAP ERP solutions, and data analytics dashboards.
-
-I enjoy solving complex problems through innovative and practical software solutions while continuously improving my technical skills.
-
-</p>
-
-
-
-
-<div class="skills-preview">
-
-
-<h3>
 Skills Set
 </h3>
 
@@ -158,384 +142,118 @@ Skills Set
 <li>Mobile Development</li>
 <li>UI/UX Design</li>
 
-</ul>
+</ul></div></section>
 
-
-</div>
-
-
-</section>
-
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
 
-
-/* =========================
-NAVBAR HIDE ON SCROLL
-========================= */
+const hero =
+document.getElementById("hero");
 
 
+
+hero.addEventListener("mouseenter",()=>{
+
+hero.classList.add("active");
+
+});
+
+
+
+hero.addEventListener("mouseleave",()=>{
+
+hero.classList.remove("active");
+
+});
 let lastScroll = 0;
 
-const navbar = document.querySelector(".ribbon-menu");
+const navbar = document.querySelector(".navbar");
 
-
-window.addEventListener("scroll",()=>{
-
+window.addEventListener("scroll", () => {
 
     let currentScroll = window.scrollY;
 
 
-
+    // Scroll down = hide navbar
     if(currentScroll > lastScroll && currentScroll > 80){
 
-        navbar.style.transform = "translateY(-100%)";
+        navbar.classList.add("hide");
 
     }
 
+    // Scroll up = show navbar
     else{
 
-        navbar.style.transform = "translateY(0)";
+        navbar.classList.remove("hide");
 
     }
 
+
+    // Shrink navbar after scrolling
+    if(currentScroll > 100){
+
+        navbar.classList.add("rink");
+
+    }
+    else{
+
+        navbar.classList.remove("shrink");
+
+    }
 
 
     lastScroll = currentScroll;
 
-
 });
 
 
+// Mobile touch
+
+hero.addEventListener("touchstart",()=>{
+
+hero.classList.toggle("active");
+
+});
+
+const deviceGreeting = document.getElementById("deviceGreeting");
+
+const userAgent = navigator.userAgent;
+
+let deviceType = "Desktop Environment";
 
 
+if (/iPhone|iPad|iPod/i.test(userAgent)) {
 
+    deviceType = "Apple Environment";
 
+}
 
-/* =========================
-HERO HOVER EFFECT
-========================= */
+else if (/Android/i.test(userAgent)) {
 
+    deviceType = "Android Environment";
 
-const hero = document.getElementById("hero");
+}
 
+else if (/Windows/i.test(userAgent)) {
 
+    deviceType = "Windows Environment";
 
-if(hero){
+}
 
+else if (/Macintosh/i.test(userAgent)) {
 
-
-    // Desktop mouse enter
-
-    hero.addEventListener("mouseenter",()=>{
-
-
-        hero.classList.add("active");
-
-
-    });
-
-
-
-
-
-    // Desktop mouse leave
-
-    hero.addEventListener("mouseleave",()=>{
-
-
-        hero.classList.remove("active");
-
-
-    });
-
-
-
-
-
-
-    // Mobile touch
-
-    hero.addEventListener("touchstart",()=>{
-
-
-        hero.classList.toggle("active");
-
-
-    });
-
-
-
-
-
-
-    // Remove expanded hero when scrolling
-
-    window.addEventListener("scroll",()=>{
-
-
-        hero.classList.remove("active");
-
-
-    });
-
-
+    deviceType = "Mac Environment";
 
 }
 
 
-
-
-
-
-
-
-/* =========================
-ACTIVE MENU
-========================= */
-
-
-function updateActiveMenu(){
-
-
-    const currentPage =
-    window.location.pathname.split("/").pop()
-    || "index.html";
-
-
-
-    const menuItems =
-    document.querySelectorAll(".menu-item");
-
-
-
-    menuItems.forEach(item=>{
-
-
-        if(item.getAttribute("href") === currentPage){
-
-
-            item.classList.add("active");
-
-
-        }
-
-
-        else{
-
-
-            item.classList.remove("active");
-
-
-        }
-
-
-    });
-
-
-}
-
-
-
-updateActiveMenu();
-
-
-
-
-
-
-
-/* =========================
-SMOOTH SCROLL
-========================= */
-
-
-document.querySelectorAll('a[href^="#"]')
-.forEach(anchor=>{
-
-
-    anchor.addEventListener("click",(e)=>{
-
-
-        e.preventDefault();
-
-
-
-        const target =
-        document.querySelector(
-            anchor.getAttribute("href")
-        );
-
-
-
-        if(target){
-
-
-            target.scrollIntoView({
-
-                behavior:"smooth"
-
-            });
-
-
-        }
-
-
-
-    });
-
-
-
-});
-
-
-
-
-
-
-
-/* =========================
-SCROLL TO TOP BUTTON
-========================= */
-
-
-const scrollButton =
-document.createElement("button");
-
-
-
-scrollButton.innerHTML="↑";
-
-
-
-scrollButton.style.position="fixed";
-
-scrollButton.style.bottom="20px";
-
-scrollButton.style.right="20px";
-
-scrollButton.style.width="50px";
-
-scrollButton.style.height="50px";
-
-scrollButton.style.border="none";
-
-scrollButton.style.borderRadius="50%";
-
-scrollButton.style.background="#3498db";
-
-scrollButton.style.color="white";
-
-scrollButton.style.fontSize="25px";
-
-scrollButton.style.cursor="pointer";
-
-scrollButton.style.display="none";
-
-scrollButton.style.zIndex="999";
-
-
-
-document.body.appendChild(scrollButton);
-
-
-
-
-
-window.addEventListener("scroll",()=>{
-
-
-    if(window.scrollY > 300){
-
-
-        scrollButton.style.display="block";
-
-
-    }
-
-    else{
-
-
-        scrollButton.style.display="none";
-
-
-    }
-
-
-});
-
-
-
-
-
-
-scrollButton.addEventListener("click",()=>{
-
-
-    window.scrollTo({
-
-        top:0,
-
-        behavior:"smooth"
-
-    });
-
-
-});
-
-
-
-
-
-
-/* BUTTON HOVER */
-
-
-scrollButton.addEventListener("mouseenter",()=>{
-
-
-    scrollButton.style.background="#e74c3c";
-
-
-});
-
-
-
-scrollButton.addEventListener("mouseleave",()=>{
-
-
-    scrollButton.style.background="#3498db";
-
-
-});
-
-
-
-
-
-
-
-/* =========================
-PAGE LOAD EFFECT
-========================= */
-
-
-window.addEventListener("load",()=>{
-
-
-    document.body.style.opacity="1";
-
-
-});
-
-
-
-
-
-
-console.log("Portfolio JavaScript Loaded Successfully");
-
-
+deviceGreeting.innerHTML = 
+`
+Welcome Visitor
+<span class="ms-2 small opacity-75">
+| Accessing from ${deviceType}
+</span>
+`;
 </script>
 
 
